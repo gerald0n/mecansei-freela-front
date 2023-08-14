@@ -6,6 +6,9 @@ const REGISTER = 'signup'
 const LOGIN = 'signin'
 const GET_USER = 'user'
 const GET_PRODUCTS = 'products/all'
+const GET_PRODUCT_ONE = 'products/'
+const GET_USER_INFOS = 'user/infos'
+const ADD_PRODUCT = 'products/add'
 const DEFAULT_URL = `http://localhost:5000/`
 
 export const signUp = (user) => {
@@ -22,7 +25,9 @@ export const signIn = (email, password) => {
 }
 
 export const getUser = (token) => {
-   const data = axios.get(DEFAULT_URL.concat(GET_USER), {headers: {'Authorization': `Bearer ${token}`}})
+   const data = axios.get(DEFAULT_URL.concat(GET_USER), {
+      headers: { Authorization: `Bearer ${token}` }
+   })
 
    return data
 }
@@ -33,5 +38,28 @@ export const getProducts = () => {
    return data
 }
 
+export const getProductOne = (id) => {
+   const data = axios.get(DEFAULT_URL.concat(GET_PRODUCT_ONE + id))
 
+   return data
+}
 
+export const getUserInfos = (token) => {
+   const data = axios.get(DEFAULT_URL.concat(GET_USER_INFOS), {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+
+   return data
+}
+
+export const addNewProduct = (product, token) => {
+   const data = axios.post(
+      DEFAULT_URL.concat(ADD_PRODUCT),
+
+      { ...product, is_avaible: true },
+      {
+         headers: { Authorization: `Bearer ${token}` }
+      }
+   )
+   return data
+}

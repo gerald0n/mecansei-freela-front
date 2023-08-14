@@ -37,18 +37,11 @@ export default function Category({ name }) {
          <h3>{name}</h3>
 
          <div className="produtos">
-            {products && (
-               <ProductThumbnail
-                  name={products[0]?.name}
-                  img={products[0]?.image_url}
-                  price={products[0]?.price}
-               />
-            )}
-
             {products &&
                products.map((product) => (
                   <ProductThumbnail
                      key={product.id}
+                     id={product.id}
                      name={product.name}
                      img={product.image_url}
                      price={product.price}
@@ -60,11 +53,10 @@ export default function Category({ name }) {
 }
 
 const Container = styled.div`
-   height: 25rem;
-   padding-left: 1rem;
    display: flex;
    flex-direction: column;
    gap: 0.5rem;
+   padding-inline: 2rem;
    /* border-bottom: 1px solid #2a2a2a23; */
 
    h3 {
@@ -73,11 +65,8 @@ const Container = styled.div`
 
    .produtos {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
-      padding-right: 1rem;
 
       &::-webkit-scrollbar {
          display: none;

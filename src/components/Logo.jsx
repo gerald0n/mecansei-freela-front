@@ -1,8 +1,12 @@
+import { useNavigate } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 export default function Logo({size}) {
+   const navigate = useNavigate()
    return (
-      <Container size={size}>
+      <Container size={size} onClick={() => {
+         navigate('/homepage')
+      }}>
          <span>Me</span>Cansei
       </Container>
    )

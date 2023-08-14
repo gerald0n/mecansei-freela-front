@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-export default function ProductThumbnail({img, name, price}) {
+export default function ProductThumbnail({id, img, name, price}) {
+   const navigate = useNavigate()
    return (
       <Container>
          <div className="img">
@@ -11,7 +13,10 @@ export default function ProductThumbnail({img, name, price}) {
          </div>
          <p>{name}</p>
          <span>R$ {price}</span>
-         <button>Saiba mais</button>
+         <button onClick={() => {
+            console.log(id)
+            navigate(`/products/${id}`)
+         }}>Saiba mais</button>
       </Container>
    )
 }

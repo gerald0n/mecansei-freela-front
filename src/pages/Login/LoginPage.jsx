@@ -40,8 +40,7 @@ export default function Login() {
       signIn(email, password)
          .then((response) => {
             localStorage.setItem('token', response.data.token)
-            //limpar inputs
-            //navigate para página inicial
+            navigate('/homepage')
          })
          .catch((error) => {
             alert(error.response.data)
