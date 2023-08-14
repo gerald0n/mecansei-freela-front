@@ -4,6 +4,8 @@ import axios from 'axios'
 /* const Auth = 'Bearer '.concat(USER_TOKEN) */
 const REGISTER = 'signup'
 const LOGIN = 'signin'
+const GET_USER = 'user'
+const GET_PRODUCTS = 'products/all'
 const DEFAULT_URL = `http://localhost:5000/`
 
 export const signUp = (user) => {
@@ -19,9 +21,17 @@ export const signIn = (email, password) => {
    return data
 }
 
-export const postHabit = (obj, token) => {
-   const data = axios.post(DEFAULT_URL.concat(HABIT), obj, {headers: {'Authorization': `Bearer ${token}`}})
+export const getUser = (token) => {
+   const data = axios.get(DEFAULT_URL.concat(GET_USER), {headers: {'Authorization': `Bearer ${token}`}})
 
    return data
 }
+
+export const getProducts = () => {
+   const data = axios.get(DEFAULT_URL.concat(GET_PRODUCTS))
+
+   return data
+}
+
+
 
