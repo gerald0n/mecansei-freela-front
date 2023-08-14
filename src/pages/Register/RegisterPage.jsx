@@ -30,10 +30,10 @@ export default function RegisterPage() {
       data.then((response) => {
          alert('Cadastro efetuado com sucesso!')
          console.log(response.data)
-         /* setTimeout(() => {
+         setTimeout(() => {
             setUser(response.data)
             navigate('/')
-         }, 2500)  */
+         }, 2500) 
       })
       data.catch((error) => {
          alert(error.response.data)
