@@ -6,10 +6,13 @@ import { AppContext } from '../../App'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { signUp } from '../../services/api'
+import Logo from '../../components/Logo'
+import { useState } from 'react'
 /* import { errorNotification, successNotification } from '../../services/notifications' */
 
 export default function RegisterPage() {
-   const { user, setUser } = useContext(AppContext)
+   const { user, setUser, infos, setInfos } = useContext(AppContext)
+
    const navigate = useNavigate()
 
    useEffect(() => {
@@ -21,19 +24,26 @@ export default function RegisterPage() {
          password: '',
          confirmPassword: ''
       })
+
+      setInfos({
+         street_address: '',
+         zip_code: '',
+         optional_description: '',
+         city: ''
+      })
    }, [])
 
    function signUpForm(e) {
       e.preventDefault()
 
-      const data = signUp(user)
+      const data = signUp({...user, ...infos})
       data.then((response) => {
          alert('Cadastro efetuado com sucesso!')
          console.log(response.data)
          setTimeout(() => {
             setUser(response.data)
             navigate('/')
-         }, 2500) 
+         }, 2500)
       })
       data.catch((error) => {
          alert(error.response.data)
@@ -46,18 +56,15 @@ export default function RegisterPage() {
          animate={{ opacity: 1 }}
          transition={{ duration: 0.5 }}
          style={{
-            height: '100vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
          }}
       >
          <Container>
-            <h1 className="logo">
-               <span>Me</span>Cansei
-            </h1>
+            <Logo />
             <FormLogin onSubmit={signUpForm}>
-               <h2>crie sua conta</h2>
+               <h2>Olá! quem é você?</h2>
                <label htmlFor="name">Nome completo</label>
                <Input
                   type="text"
@@ -79,6 +86,7 @@ export default function RegisterPage() {
                   }}
                   required
                />
+               <h2>Entendo... como contactamos você?</h2>
                <label htmlFor="email">E-mail</label>
                <Input
                   type="email"
@@ -100,6 +108,52 @@ export default function RegisterPage() {
                   }}
                   required
                />
+               <h2>Legal! E onde te achar?</h2>
+
+               <label htmlFor="street_address">Endereço</label>
+               <Input
+                  type="text"
+                  placeholder="ex.: av brasil, 750, centro"
+                  value={infos.street_address}
+                  onChange={(e) => {
+                     setInfos({ ...infos, street_address: e.target.value })
+                  }}
+                  required
+               />
+               <label htmlFor="zip_code">Código Postal (somente números)</label>
+               <Input
+                  type="text"
+                  maxLength={9}
+                  placeholder="ex.: 59900-000"
+                  value={infos.zip_code}
+                  onChange={(e) => {
+                     setInfos({ ...infos, zip_code: e.target.value })
+                  }}
+                  required
+               />
+               <label htmlFor="optional_description">Complemento</label>
+               <Input
+                  type="text"
+                  placeholder="ex.: apto 03, prédio amarelo"
+                  value={infos.optional_description}
+                  onChange={(e) => {
+                     setInfos({ ...infos, optional_description: e.target.value })
+                  }}
+                  required
+               />
+
+               <label htmlFor="city">Cidade</label>
+               <Input
+                  type="text"
+                  placeholder="ex.: Madureira"
+                  value={infos.city}
+                  onChange={(e) => {
+                     setInfos({ ...infos, city: e.target.value })
+                  }}
+                  required
+               />
+
+               <h2>Certo. Escolha uma senha...</h2>
                <label htmlFor="password">Senha</label>
                <Input
                   type="password"
@@ -120,6 +174,7 @@ export default function RegisterPage() {
                   }}
                   required
                />
+
                <InputButton data-test="signup-btn" type="submit" required>
                   Cadastrar
                </InputButton>

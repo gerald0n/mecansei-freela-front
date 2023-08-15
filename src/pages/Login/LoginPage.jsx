@@ -2,16 +2,23 @@ import { Container, FormLogin, Input, InputButton, RegisterLink } from '../../st
 import { useContext, useEffect } from 'react'
 import App, { AppContext } from '../../App'
 import { useNavigate } from 'react-router-dom'
-/* import { ToastContainer } from 'react-toastify' */
+
 import { motion } from 'framer-motion'
 import { signIn } from '../../services/api.js'
-/* import { errorNotification, successNotification } from '../../services/notifications' */
+import Logo from '../../components/Logo'
 
 export default function Login() {
    const { user, setUser } = useContext(AppContext)
 
    useEffect(() => {
-      setUser({ fullname: '', email: '', phone_number: '', cpf: '', password: ''})
+      setUser({
+         fullname: '',
+         email: '',
+         phone_number: '',
+         cpf: '',
+         password: '',
+         confirmPassword: ''
+      })
 
       /*
 
@@ -32,12 +39,11 @@ export default function Login() {
    }, [])
 
    const navigate = useNavigate()
-   const { email, password } = user
 
    function login() {
       event.preventDefault()
 
-      signIn(email, password)
+      signIn(user.email, user.password)
          .then((response) => {
             localStorage.setItem('token', response.data.token)
             navigate('/homepage')
@@ -60,22 +66,20 @@ export default function Login() {
          }}
       >
          <Container>
-            <h1 className="logo">
-               <span>Me</span>Cansei
-            </h1>
-               <FormLogin onSubmit={login}>
+            <Logo />
+            <FormLogin onSubmit={login}>
                <h2>Acesse sua conta</h2>
                <label htmlFor="email">Email</label>
                <Input
                   type="email"
-                  value={email}
+                  value={user.email}
                   onChange={(e) => setUser({ ...user, email: e.target.value })}
                   required
                />
                <label htmlFor="password">Senha</label>
                <Input
                   type="password"
-                  value={password}
+                  value={user.password}
                   onChange={(e) => setUser({ ...user, password: e.target.value })}
                   required
                />

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
-   margin-bottom: 10rem;
+   margin-block: 10rem;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -10,22 +10,14 @@ export const Container = styled.div`
    overflow: hidden;
    background: #fff;
 
-   .logo {
-      font-size: 4rem;
-      font-family: 'Caprasimo';
-      color: #460d16;
-
-      margin-bottom: 2rem;
-
-      span {
-         color: #fe457f;
-      }
+   h2:not(h2:nth-child(1)) {
+      margin-top: 4rem;
    }
 
    h2 {
-      width: 100%;
-      text-align: center;
-      font-size: 2rem;
+      text-align: left;
+      font-size: 1.8rem;
+      font-weight: 600;
       color: #4a4a4a;
       margin-bottom: 2rem;
    }
@@ -56,7 +48,7 @@ export const RegisterLink = styled.a`
 
    text-align: center;
    cursor: pointer;
-   color: #61005D;
+   color: #61005d;
 
    &:hover {
       color: #260125;

@@ -9,7 +9,8 @@ const GET_PRODUCTS = 'products/all'
 const GET_PRODUCT_ONE = 'products/'
 const GET_USER_INFOS = 'user/infos'
 const ADD_PRODUCT = 'products/add'
-const DEFAULT_URL = `http://localhost:5000/`
+const GET_PRODUCTS_ME = 'user/products'
+const DEFAULT_URL = `https://mecansei-api-fih2.onrender.com/`
 
 export const signUp = (user) => {
    const data = axios.post(DEFAULT_URL.concat(REGISTER), user)
@@ -44,10 +45,8 @@ export const getProductOne = (id) => {
    return data
 }
 
-export const getUserInfos = (token) => {
-   const data = axios.get(DEFAULT_URL.concat(GET_USER_INFOS), {
-      headers: { Authorization: `Bearer ${token}` }
-   })
+export const getUserInfos = (id) => {
+   const data = axios.post(DEFAULT_URL.concat(GET_USER_INFOS), id)
 
    return data
 }
@@ -61,5 +60,13 @@ export const addNewProduct = (product, token) => {
          headers: { Authorization: `Bearer ${token}` }
       }
    )
+   return data
+}
+
+export const productsMe = (token) => {
+   const data = axios.get(DEFAULT_URL.concat(GET_PRODUCTS_ME), {
+      headers: { Authorization: `Bearer ${token}` }
+   })
+
    return data
 }

@@ -2,13 +2,11 @@ import { useParams } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
-import { getProductOne, getUserInfos } from '../../services/api'
+import { getProductOne, getUser, getUserInfos } from '../../services/api'
 
 export default function ProductPage() {
    const [product, setProduct] = useState([])
-   const [infos, setInfos] = useState([])
-   const [username, setUsername] = useState('')
-   const [phone, setPhone] = useState('')
+   const [infos, setInfos] = useState({})
 
    const { id } = useParams()
 
@@ -17,28 +15,13 @@ export default function ProductPage() {
       data
          .then((response) => {
             setProduct(response.data)
+            const data = getUserInfos({id: response.data.id_user})
+            data
+            .then(response => {
+               setInfos(response.data)
+            })
          })
          .catch((error) => console.log(error))
-   }, [])
-
-   useEffect(() => {
-      if (localStorage.length > 0) {
-         const authToken = localStorage.getItem('token')
-
-         const data = getUserInfos(authToken)
-
-         data
-            .then((response) => {
-               const { username } = response.data
-               const { infos } = response.data
-               const { phone } = response.data
-
-               setInfos(infos)
-               setUsername(username)
-               setPhone(phone)
-            })
-            .catch((error) => console.log(error))
-      }
    }, [])
 
    return (
@@ -82,8 +65,8 @@ export default function ProductPage() {
                <h2>Anunciante</h2>
 
                <div>
-                  <span>{username}</span>
-                  <span>CONTATO: {phone}</span>
+                  <span>{infos.username}</span>
+                  <span>CONTATO: {infos.phone}</span>
                </div>
             </div>
          </div>

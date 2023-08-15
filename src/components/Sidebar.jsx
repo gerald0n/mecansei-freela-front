@@ -17,8 +17,13 @@ export default function Sidebar() {
             <li onClick={() => {
                navigate('/newProduct')
             }}>Desapegar</li>
-            <li>Meus produtos</li>
-            <li>Sair</li>
+            <li onClick={() => {
+               navigate('/products/me')
+            }}>Meus produtos</li>
+            <li onClick={() => {
+               localStorage.clear()
+               navigate('/')
+            }}>Sair</li>
          </ul>
       </Container>
    )
